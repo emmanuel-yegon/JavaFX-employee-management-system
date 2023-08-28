@@ -11,7 +11,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@loginDesign.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.employeemanagement.EmployeeController">
     <children>
-        <AnchorPane prefHeight="400.0" prefWidth="600.0">
+        <AnchorPane fx:id="main_form" prefHeight="400.0" prefWidth="600.0">
             <children>
                 <AnchorPane prefHeight="400.0" prefWidth="300.0" styleClass="left-form">
                     <children>
@@ -32,10 +32,10 @@
                                 <Font name="Tahoma Bold" size="18.0" />
                             </font>
                         </Label>
-                        <TextField layoutX="39.0" layoutY="136.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" />
-                        <PasswordField layoutX="39.0" layoutY="183.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" />
-                        <Button layoutX="41.0" layoutY="224.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@loginDesign.css" text="Login" />
-                        <Button layoutX="232.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="59.0" styleClass="close" stylesheets="@loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0">
+                        <TextField fx:id="username" layoutX="39.0" layoutY="136.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" />
+                        <PasswordField fx:id="password" layoutX="39.0" layoutY="183.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" />
+                        <Button fx:id="loginBtn" layoutX="40.0" layoutY="233.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@loginDesign.css" text="Login" />
+                        <Button fx:id="close" layoutX="232.0" layoutY="14.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="59.0" styleClass="close" stylesheets="@loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0">
                             <graphic>
                                 <FontIcon iconLiteral="fa-close" iconSize="20" />
                             </graphic>
