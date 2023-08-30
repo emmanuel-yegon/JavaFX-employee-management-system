@@ -63,6 +63,8 @@ public class EmployeeController implements Initializable {
                 alert.showAndWait();
             }else{
                 if (rs.next()){
+                    getData.username = username.getText();
+
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
