@@ -8,7 +8,7 @@ public class EmployeeDB {
         try {
            Class.forName("com.mysql.cj.jdbc.Driver");
 
-           Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/javafx_ems","root","Kip10983M#");
+           Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/javafx_ems","root","1234");
            return connect;
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,6 +13,7 @@ public class EmployeeData {
     private String image;
     private Date date;
     private Double salary;
+    private Double allowance;
 
     public EmployeeData(String employeeId, String firstName, String lastName, String gender, String phoneNum, String position, String image, Date date) {
         this.employeeId = employeeId;
@@ -25,12 +26,13 @@ public class EmployeeData {
         this.date = date;
     }
 
-    public EmployeeData(String employeeId, String firstName, String lastName, String position,Double salary) {
+    public EmployeeData(String employeeId, String firstName, String lastName, String position,Double salary,Double allowance) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
         this.salary = salary;
+        this.allowance = allowance;
     }
 
 
@@ -68,5 +70,9 @@ public class EmployeeData {
 
     public Double getSalary() {
         return salary;
+    }
+
+    public Double getAllowance() {
+        return allowance;
     }
 }

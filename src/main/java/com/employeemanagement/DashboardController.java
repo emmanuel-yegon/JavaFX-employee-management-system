@@ -145,6 +145,9 @@ public class DashboardController implements Initializable {
     private TableColumn<EmployeeData, String> salary_col_salary;
 
     @FXML
+    private TableColumn<EmployeeData, String> salary_col_allowance;
+
+    @FXML
     private TextField salary_employeeID;
 
     @FXML
@@ -161,6 +164,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private TextField salary_salary;
+
+    @FXML
+    private TextField salary_allowance;
 
     @FXML
     private TableView<EmployeeData> salary_tableView;
@@ -322,8 +328,8 @@ public class DashboardController implements Initializable {
                     prepare.executeUpdate();
 
                     String insertInfo = "INSERT INTO employee_info"
-                            + "(employee_id,firstName,lastName,position,salary,date)"
-                            + "VALUES(?,?,?,?,?,?)";
+                            + "(employee_id,firstName,lastName,position,salary,allowance,date)"
+                            + "VALUES(?,?,?,?,?,?,?)";
 
                     prepare = connect.prepareStatement(insertInfo);
                     prepare.setString(1, addEmployee_employeeID.getText());
@@ -331,7 +337,8 @@ public class DashboardController implements Initializable {
                     prepare.setString(3, addEmployee_lastName.getText());
                     prepare.setString(4, (String) addEmployee_position.getSelectionModel().getSelectedItem());
                     prepare.setString(5, "0.0");
-                    prepare.setString(6, String.valueOf(sqlDate));
+                    prepare.setString(6, "0.0");
+                    prepare.setString(7, String.valueOf(sqlDate));
                     prepare.executeUpdate();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
@@ -557,9 +564,9 @@ public class DashboardController implements Initializable {
                     return true;
                 } else if (predicateEmployeeData.getPosition().toLowerCase().contains(searchKey)) {
                     return true;
-                } else if (predicateEmployeeData.getDate().toString().contains(searchKey)){
+                } else if (predicateEmployeeData.getDate().toString().contains(searchKey)) {
                     return true;
-                } else return  false;
+                } else return false;
             });
         });
 
@@ -622,7 +629,7 @@ public class DashboardController implements Initializable {
         addEmployee_firstName.setText(employeeData.getFirstName());
         addEmployee_lastName.setText(employeeData.getLastName());
         addEmployee_phoneNum.setText(employeeData.getPhoneNum());
-        addEmployee_gender.getSelectionModel().select(0);
+//        addEmployee_gender.getSelectionModel().select(0);
 
         getData.path = employeeData.getImage();
 
@@ -632,7 +639,7 @@ public class DashboardController implements Initializable {
     }
 
     public void salaryUpdate() {
-        String sql = "UPDATE employee_info SET salary ='" + salary_salary.getText() + "' WHERE employee_id ='"
+        String sql = "UPDATE employee_info SET salary ='" + salary_salary.getText() + "', allowance ='" + salary_allowance.getText() + "'WHERE employee_id ='"
                 + salary_employeeID.getText() + "'";
 
         connect = EmployeeDB.connectDb();
@@ -643,24 +650,31 @@ public class DashboardController implements Initializable {
             if (salary_employeeID.getText().isEmpty()
                     || salary_firstName.getText().isEmpty()
                     || salary_lastName.getText().isEmpty()
-                    || salary_position.getText().isEmpty()) {
-
+                    || salary_position.getText().isEmpty()){
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please Select item first");
                 alert.showAndWait();
             } else {
-                statement = connect.createStatement();
-                statement.executeUpdate(sql);
+                if (salary_salary.getText().isEmpty()||salary_allowance.getText().isEmpty()){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please fill all the blank fields!");
+                    alert.showAndWait();
+                }else {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
 
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Successfully Updated!");
-                alert.showAndWait();
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
 
-                salaryShowListData();
+                    salaryShowListData();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -673,6 +687,7 @@ public class DashboardController implements Initializable {
         salary_lastName.setText("");
         salary_position.setText("");
         salary_salary.setText("");
+        salary_allowance.setText("");
     }
 
     public ObservableList<EmployeeData> salaryListData() {
@@ -692,7 +707,8 @@ public class DashboardController implements Initializable {
                         , rs.getString("firstName")
                         , rs.getString("lastName")
                         , rs.getString("position")
-                        , rs.getDouble("salary"));
+                        , rs.getDouble("salary")
+                        , rs.getDouble("allowance"));
 
                 listData.add(employeeData);
             }
@@ -713,7 +729,7 @@ public class DashboardController implements Initializable {
         salary_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         salary_col_position.setCellValueFactory(new PropertyValueFactory<>("position"));
         salary_col_salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-
+        salary_col_allowance.setCellValueFactory(new PropertyValueFactory<>("allowance"));
         salary_tableView.setItems(salaryList);
     }
 
@@ -730,12 +746,13 @@ public class DashboardController implements Initializable {
         salary_lastName.setText(employeeData.getLastName());
         salary_position.setText(employeeData.getPosition());
         salary_salary.setText(String.valueOf(employeeData.getSalary()));
-
+        salary_allowance.setText(String.valueOf(employeeData.getAllowance()));
     }
 
-    public  void defaultNav(){
+    public void defaultNav() {
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right,#3a4368, #28966c);");
     }
+
     public void displayUsername() {
         username.setText(getData.username);
     }
