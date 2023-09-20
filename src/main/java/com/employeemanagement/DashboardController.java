@@ -629,7 +629,6 @@ public class DashboardController implements Initializable {
         addEmployee_firstName.setText(employeeData.getFirstName());
         addEmployee_lastName.setText(employeeData.getLastName());
         addEmployee_phoneNum.setText(employeeData.getPhoneNum());
-//        addEmployee_gender.getSelectionModel().select(0);
 
         getData.path = employeeData.getImage();
 
